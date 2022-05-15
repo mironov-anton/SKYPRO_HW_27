@@ -11,7 +11,10 @@ def make_fixture(csv_file_path: str, json_file_path: str, model_name: str):
             fixture_dict = {}
             fields_dict = {}
             for key, value in list(row.items())[1:]:
-                fields_dict[key] = row[key]
+                if key == "is_published":
+                    fields_dict[key] = bool(row[key])
+                else:
+                    fields_dict[key] = row[key]
             fixture_dict["model"] = "ads." + model_name
             fixture_dict["pk"] = row[list(row.keys())[0]]
             fixture_dict["fields"] = fields_dict
